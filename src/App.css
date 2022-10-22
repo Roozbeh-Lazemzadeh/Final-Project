@@ -1,0 +1,15 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0%;
+	font-family: IRANYekanMobileRegular;
+	font-weight: 400;
+}
+body {
+	background-color: rgb(70, 69, 69);
+}
+
+@font-face {
+	font-family: IRANYekanMobileRegular;
+	src: url(./assets/fonts/Farsi_Fonts/yekan/IRANYekanMobileRegular.ttf);
+}

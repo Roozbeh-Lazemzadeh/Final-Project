@@ -1,13 +1,13 @@
 import { Col, Radio, Row } from "antd";
 import "../../module/SectionHeader.css";
 
-export default function SectionHeader(props) {
+export default function SectionHeaderTwo(props) {
 	function handleClick(action) {
 		switch (action) {
-			case "movie":
-				return props.setMediaType("movie");
-			case "tv":
-				return props.setMediaType("tv");
+			case "day":
+				return props.setMediaType("day");
+			case "week":
+				return props.setMediaType("week");
 		}
 	}
 
@@ -17,12 +17,12 @@ export default function SectionHeader(props) {
 			<div className="toggle_section">
 				<Row>
 					<Col span={12}>
-						<Radio.Group defaultValue="Movies" buttonStyle="solid">
-							<Radio.Button onClick={() => handleClick("movie")} value="Movies">
-								Movies
+						<Radio.Group defaultValue="Today" buttonStyle="solid">
+							<Radio.Button onClick={() => handleClick("day")} value="Today">
+								Today
 							</Radio.Button>
-							<Radio.Button onClick={() => handleClick("tv")} value="tv">
-								TV
+							<Radio.Button onClick={() => handleClick("week")} value="Week">
+								Week
 							</Radio.Button>
 						</Radio.Group>
 					</Col>

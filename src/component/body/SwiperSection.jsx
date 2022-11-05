@@ -8,12 +8,19 @@ import { NavLink } from "react-router-dom";
 import SectionHeader from "./SectionHeader";
 
 export default function SwiperSection() {
+	const [mediaType, setMediaType] = useState("movie");
 	const [movies, setMovies] = useState([]);
+	let categorie;
+	if (mediaType == "movie") {
+		categorie = "movie";
+	} else if (mediaType == "tv") {
+		categorie = "tv";
+	}
 
 	async function getPopularMovies() {
 		try {
 			const { data } = await axios.get(
-				`${baseUrl}/movie/popular?api_key=${apikey}`
+				`${baseUrl}/${categorie}/popular?api_key=${apikey}`
 			);
 
 			setMovies(data.results);
@@ -24,16 +31,21 @@ export default function SwiperSection() {
 	}
 	useEffect(() => {
 		getPopularMovies();
-	}, []);
+	}, [categorie]);
 
 	return (
 		<>
+			<SectionHeader
+				textH3={"Free To Watch"}
+				mediaType={mediaType}
+				setMediaType={setMediaType}
+			/>
 			<Swiper
 				modules={[Autoplay]}
 				spaceBetween={15}
 				slidesPerView={2}
 				loop={true}
-				autoplay={{ delay: 4000 }}
+				autoplay={{ delay: 2000 }}
 				onSlideChange={() => console.log("slide change")}
 				onSwiper={(swiper) => console.log(swiper)}
 				breakpoints={{
@@ -57,7 +69,7 @@ export default function SwiperSection() {
 			>
 				{movies.map((movie) => (
 					<SwiperSlide key={movie.id}>
-						<NavLink to={`/movie/${movie.id}`}>
+						<NavLink to={`/${categorie}/${movie.id}`}>
 							<div className="item">
 								<img
 									src={posterImg(movie.poster_path)}

@@ -5,14 +5,22 @@ import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
 import Card from "../Card/Card";
 import "../../module/movieSection.css";
 import { NavLink } from "react-router-dom";
+import SectionHeaderTwo from "./SectionHeaderTwo";
 
 export default function Trends() {
+	const [mediaType, setMediaType] = useState("day");
 	const [movies, setMovies] = useState([]);
+	let categorie;
+	if (mediaType == "day") {
+		categorie = "day";
+	} else if (mediaType == "week") {
+		categorie = "week";
+	}
 
 	async function getcard() {
 		try {
 			const { data } = await axios.get(
-				`${baseUrl}/trending/all/day?api_key=${apikey}`
+				`${baseUrl}/trending/all/${categorie}?api_key=${apikey}`
 			);
 
 			setMovies(data.results);
@@ -23,10 +31,15 @@ export default function Trends() {
 	}
 	useEffect(() => {
 		getcard();
-	}, []);
+	}, [categorie]);
 
 	return (
 		<>
+			<SectionHeaderTwo
+				textH3={"Trending"}
+				mediaType={mediaType}
+				setMediaType={setMediaType}
+			/>
 			<Row justify="center" gutter={16}>
 				{movies.map(
 					(movie) =>

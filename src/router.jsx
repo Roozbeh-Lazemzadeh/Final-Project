@@ -18,7 +18,6 @@ export const router = createBrowserRouter([
 				element: (
 					<>
 						<Header />
-						<SectionHeader textH3={"Free To Watch"} textdiv={"View All"} />
 						<Home />
 						<Footer />
 					</>

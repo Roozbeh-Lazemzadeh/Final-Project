@@ -1,6 +1,6 @@
 import Nav from "./Nav";
 import Search from "./Search";
-import logo from "../../picture/logo.png";
+import logo from "../../picture/logo2.svg";
 
 export default function Header() {
 	return (

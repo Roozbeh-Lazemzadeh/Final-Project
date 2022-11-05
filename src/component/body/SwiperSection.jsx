@@ -4,6 +4,9 @@ import { Autoplay } from "swiper";
 import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
+import SectionHeader from "./SectionHeader";
+
 export default function SwiperSection() {
 	const [movies, setMovies] = useState([]);
 
@@ -24,35 +27,50 @@ export default function SwiperSection() {
 	}, []);
 
 	return (
-		<Swiper
-			modules={[Autoplay]}
-			spaceBetween={15}
-			slidesPerView={2}
-			loop={true}
-			autoplay={{ delay: 4000 }}
-			onSlideChange={() => console.log("slide change")}
-			onSwiper={(swiper) => console.log(swiper)}
-			breakpoints={{
-				1024: {
-					slidesPerView: 5,
-					spaceBetween: 10,
-				},
-			}}
-		>
-			{movies.map((item) => (
-				<SwiperSlide key={item.id}>
-					<div className="item">
-						<a href={"#"}>
-							<img
-								src={posterImg(item.poster_path)}
-								alt={item.title}
-								className="spimg"
-							/>
-						</a>
-						<div className="name">{item.title}</div>
-					</div>
-				</SwiperSlide>
-			))}
-		</Swiper>
+		<>
+			<Swiper
+				modules={[Autoplay]}
+				spaceBetween={15}
+				slidesPerView={2}
+				loop={true}
+				autoplay={{ delay: 4000 }}
+				onSlideChange={() => console.log("slide change")}
+				onSwiper={(swiper) => console.log(swiper)}
+				breakpoints={{
+					1024: {
+						slidesPerView: 8,
+						spaceBetween: 10,
+					},
+					640: {
+						slidesPerView: 4,
+						spaceBetween: 10,
+					},
+					480: {
+						slidesPerView: 3,
+						spaceBetween: 10,
+					},
+					320: {
+						slidesPerView: 2,
+						spaceBetween: 10,
+					},
+				}}
+			>
+				{movies.map((movie) => (
+					<SwiperSlide key={movie.id}>
+						<NavLink to={`/movie/${movie.id}`}>
+							<div className="item">
+								<img
+									src={posterImg(movie.poster_path)}
+									alt={movie.title}
+									className="img"
+								/>
+
+								<div className="name">{movie.title}</div>
+							</div>
+						</NavLink>
+					</SwiperSlide>
+				))}
+			</Swiper>
+		</>
 	);
 }

@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../src/component/Layout";
 import Home from "./component/pages/Home";
 import Movies from "./component/pages/Movies";
 import Movie from "./component/pages/Movie";
@@ -12,14 +11,14 @@ import Footer from "./component/Footer/Footer";
 
 export const router = createBrowserRouter([
 	{
-		element: <Layout />,
+		element: <App />,
 		children: [
 			{
 				path: "/",
 				element: (
 					<>
 						<Header />
-						<SectionHeader textH3={"کالکشن"} textdiv={"مشاهده همه"} />
+						<SectionHeader textH3={"Free To Watch"} textdiv={"View All"} />
 						<Home />
 						<Footer />
 					</>
@@ -43,18 +42,4 @@ export const router = createBrowserRouter([
 			},
 		],
 	},
-
-	// { path: "/", element: <Home /> },
-	// {
-	// 	path: "/movies",
-	// 	element: <Movies />,
-	// },
-	// {
-	// 	path: "/movies/:movieId",
-	// 	element: <Movie />,
-	// },
-	// {
-	// 	path: "/login",
-	// 	element: <LogIn />,
-	// },
 ]);

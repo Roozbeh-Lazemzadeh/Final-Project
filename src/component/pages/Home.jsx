@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<>
 			<SwiperSection />
-			<SectionHeader textH3={"ترندها"} textdiv={"مشاهده همه"} />
+			<SectionHeader textH3={"Tending"} textdiv={"View All"} />
 			<Trends />
 		</>
 	);

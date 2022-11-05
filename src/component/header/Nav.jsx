@@ -2,29 +2,27 @@ import LiExtension from "./LiExtension";
 
 export default function () {
 	const films = [
-		{ id: 1, film: "فیلم ایرانی" },
-		{ id: 2, film: "فیلم خارجی" },
-		{ id: 3, film: "فیلم دوبله فارسی" },
-		{ id: 4, film: "20 فیلم برتر" },
-		{ id: 5, film: "کالکشن فیلم" },
+		{ id: 1, film: "Popular" },
+		{ id: 2, film: "Now Playing" },
+		{ id: 3, film: "Upcoming" },
+		{ id: 4, film: "Top Rated" },
 	];
 	const serials = [
-		{ id: 1, serial: "سریال ایرانی " },
-		{ id: 2, serial: "سریال خارجی " },
+		{ id: 1, serial: "Popular" },
+		{ id: 2, serial: "Airing Today" },
+		{ id: 3, serial: "On TV" },
+		{ id: 4, serial: "Top Rated" },
 	];
-	const animations = [
-		{ id: 1, animation: "انیمیشن" },
-		{ id: 2, animation: "انیمیشن سریالی" },
-	];
+	const people = [{ id: 1, people: "Popular People" }];
 	return (
 		<nav className="navigat">
 			<ul>
 				<li>
-					<a href="#">هکس دانلود</a>
+					<a href="/">Hex download</a>
 				</li>
 				<li>
 					<a href="#" className="navAnchor">
-						فیلم{" "}
+						Movies
 					</a>
 					<ul className="UlExtension">
 						{films.map((item) => (
@@ -34,7 +32,7 @@ export default function () {
 				</li>
 				<li>
 					<a href="#" className="navAnchor">
-						سریال{" "}
+						TV Shows
 					</a>
 					<ul className="UlExtension">
 						{serials.map((item) => (
@@ -44,11 +42,11 @@ export default function () {
 				</li>
 				<li>
 					<a href="#" className="navAnchor">
-						انیمیشن{" "}
+						People
 					</a>
 					<ul className="UlExtension">
-						{animations.map((item) => (
-							<LiExtension animation={item.animation} key={item.id} />
+						{people.map((item) => (
+							<LiExtension people={item.people} key={item.id} />
 						))}
 					</ul>
 				</li>

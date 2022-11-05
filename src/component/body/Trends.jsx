@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
 import Card from "../Card/Card";
 import "../../module/movieSection.css";
+import { NavLink } from "react-router-dom";
 
 export default function Trends() {
 	const [movies, setMovies] = useState([]);
@@ -26,19 +27,20 @@ export default function Trends() {
 
 	return (
 		<>
-			{/* <Divider orientation="left"></Divider> */}
 			<Row justify="center" gutter={16}>
 				{movies.map(
 					(movie) =>
 						movies.indexOf(movie) < 12 && (
-							<Col xs={12} sm={8} md={6} lg={4}>
-								<Card
-									src={posterImg(movie.poster_path)}
-									title={movie.title}
-									name={movie.name}
-									vote_average={movie.vote_average}
-									media_type={movie.media_type}
-								/>
+							<Col xs={12} sm={8} md={6} lg={4} key={movie.id}>
+								<NavLink to={`/${movie.media_type}/${movie.id}`}>
+									<Card
+										src={posterImg(movie.poster_path)}
+										title={movie.title}
+										name={movie.name}
+										vote_average={movie.vote_average}
+										media_type={movie.media_type}
+									/>
+								</NavLink>
 							</Col>
 						)
 				)}

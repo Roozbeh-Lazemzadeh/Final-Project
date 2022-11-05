@@ -16,14 +16,6 @@ import "./module/swiper.css";
 function App() {
 	return (
 		<>
-			{/* <Header />
-      <SectionHeader textH3={"کالکشن"} textdiv={"مشاهده همه"} />
-      <SwiperSection />
-
-      <SectionHeader textH3={"ترندها"} textdiv={"مشاهده همه"} />
-      <Trends />
-      <SectionHeader textH3={"جدیدترین دوبله ها "} textdiv={"مشاهده همه"} />
-      <Footer /> */}
 			<Layout />
 		</>
 	);

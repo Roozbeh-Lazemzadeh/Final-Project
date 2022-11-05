@@ -1,72 +1,58 @@
-// import "swiper/css/autoplay";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
+import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
+import { useEffect, useState } from "react";
+import axios from "axios";
 export default function SwiperSection() {
-  const slides = [
-    {
-      href: "#",
-      src: "./src/picture/Annabelle-Collection-Movie-Poster-301x170.jpg.webp",
-      name: "آنابل",
-    },
-    {
-      href: "#",
-      src: "./src/picture/Dumb-and-Dumber-Movie-Collection-poster-301x170.jpg.webp",
-      name: "احمق و احمق تر",
-    },
-    {
-      href: "#",
-      src: "./src/picture/now-you-see-me-collection-movie-301x170.jpg.webp",
-      name: "اکنون مرا می بینی",
-    },
-    {
-      href: "#",
-      src: "./src/picture/Saw-collection-Movie-poster-301x170.jpg.webp",
-      name: "اره ",
-    },
-    {
-      href: "#",
-      src: "./src/picture/Scooby-Doo-collection-animation-Poster-301x170.jpg.webp",
-      name: "اسکوبی دو",
-    },
-    {
-      href: "#",
-      src: "./src/picture/The-Conjuring-Collection-Movie-Poster-301x170.jpg.webp",
-      name: "  احضار ",
-    },
-    {
-      href: "#",
-      src: "./src/picture/The-Lord-of-the-Rings-collection-1-301x170.jpg.webp",
-      name: "  ارباب حلقه ها ",
-    },
-  ];
+	const [movies, setMovies] = useState([]);
 
-  return (
-    <Swiper
-      modules={[Autoplay]}
-      spaceBetween={15}
-      slidesPerView={2}
-      loop={true}
-      autoplay={{ delay: 4000 }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
-      breakpoints={{
-        1024: {
-          slidesPerView: 5,
-          spaceBetween: 10,
-        },
-      }}
-    >
-      {slides.map((item) => (
-        <SwiperSlide>
-          <div className="item">
-            <a href={item.href}>
-              <img src={item.src} alt="" className="spimg" />
-            </a>
-            <div className="name">{item.name}</div>
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  );
+	async function getPopularMovies() {
+		try {
+			const { data } = await axios.get(
+				`${baseUrl}/movie/popular?api_key=${apikey}`
+			);
+
+			setMovies(data.results);
+			console.log(data.results);
+		} catch {
+			console.log("ERRRROR");
+		}
+	}
+	useEffect(() => {
+		getPopularMovies();
+	}, []);
+
+	return (
+		<Swiper
+			modules={[Autoplay]}
+			spaceBetween={15}
+			slidesPerView={2}
+			loop={true}
+			autoplay={{ delay: 4000 }}
+			onSlideChange={() => console.log("slide change")}
+			onSwiper={(swiper) => console.log(swiper)}
+			breakpoints={{
+				1024: {
+					slidesPerView: 5,
+					spaceBetween: 10,
+				},
+			}}
+		>
+			{movies.map((item) => (
+				<SwiperSlide key={item.id}>
+					<div className="item">
+						<a href={"#"}>
+							<img
+								src={posterImg(item.poster_path)}
+								alt={item.title}
+								className="spimg"
+							/>
+						</a>
+						<div className="name">{item.title}</div>
+					</div>
+				</SwiperSlide>
+			))}
+		</Swiper>
+	);
 }

@@ -7,10 +7,10 @@ export default function Search() {
 	return (
 		<div className="navBtn-container">
 			<Button type="primary" size="large" icon={<SearchOutlined />}>
-				جستجو
+				Search
 			</Button>
 			<Button type="primary" size="large" icon={<UserOutlined />}>
-				ورود
+				Sign In
 			</Button>
 		</div>
 	);

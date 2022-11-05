@@ -1,14 +1,17 @@
 import React from "react";
 import Header from "./header/Header";
 import Footer from "./Footer/Footer";
-import SwiperSection from "./body/SwiperSection";
-import Trends from "./body/Trends";
 import SectionHeader from "./body/SectionHeader";
+import { Outlet, RouterProvider } from "react-router-dom";
+import { router } from "../router";
+import Trends from "./body/Trends";
+import SwiperSection from "./body/SwiperSection";
 
 export default function Layout() {
 	return (
 		<>
-			<>
+			<Outlet />
+			{/* <>
 				<Header />
 				<SectionHeader textH3={"کالکشن"} textdiv={"مشاهده همه"} />
 			</>
@@ -21,7 +24,7 @@ export default function Layout() {
 
 			<>
 				<Footer />
-			</>
+			</> */}
 		</>
 	);
 }

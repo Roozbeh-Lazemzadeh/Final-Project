@@ -1,5 +1,4 @@
 .card_wrapper {
-	/* margin-top: 100px; */
 	position: relative;
 	transition: 0.3s all ease;
 	overflow: hidden;
@@ -38,7 +37,7 @@
 
 .image_rating {
 	position: absolute;
-	bottom: 22px;
+	bottom: 28px;
 	left: 20px;
 	z-index: 1;
 	background-color: #d1d0cf;
@@ -49,6 +48,7 @@
 	justify-content: center;
 	align-items: center;
 	font-weight: 600;
+	color: #141414;
 }
 
 .image_rating svg {

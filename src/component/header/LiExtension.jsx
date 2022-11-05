@@ -3,7 +3,7 @@ export default function LiExtension(props) {
 		<li>
 			{props.film}
 			{props.serial}
-			{props.animation}
+			{props.people}
 		</li>
 	);
 }

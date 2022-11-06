@@ -1,14 +1,15 @@
 import Nav from "./Nav";
 import Search from "./Search";
 import logo from "../../picture/logo2.svg";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
 	return (
 		<navigation id="masthead" className="header">
 			<div className="logo">
-				<a href="#" title="Hex download">
+				<NavLink to="/" title="Hex download">
 					<img src={logo}></img>
-				</a>
+				</NavLink>
 			</div>
 			<>
 				<Nav />

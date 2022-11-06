@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import LiExtension from "./LiExtension";
 
 export default function () {
@@ -15,10 +16,10 @@ export default function () {
 	];
 	const people = [{ id: 1, people: "Popular People" }];
 	return (
-		<nav className="navigat">
+		<nav className="navigate">
 			<ul>
 				<li>
-					<a href="/">Hex download</a>
+					<NavLink to="/">Hex download</NavLink>
 				</li>
 				<li>
 					<a href="#" className="navAnchor">

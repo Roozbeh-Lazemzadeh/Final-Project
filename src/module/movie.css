@@ -1,0 +1,65 @@
+.container {
+	margin-top: 80px;
+	background-position: right !important;
+	background-size: cover !important;
+	background-repeat: no-repeat !important;
+	object-fit: cover;
+	height: 510px;
+	padding: 50px;
+	position: relative;
+	filter: blur(5px);
+}
+.container::after {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-image: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.85),
+		rgba(0, 0, 0, 0.547)
+	);
+}
+#poster_img {
+	border-radius: 10px;
+	position: absolute;
+	top: 17%;
+	left: 4%;
+	z-index: 2;
+	height: 65%;
+	width: 25%;
+}
+.movie_details > span {
+	color: #fff !important;
+	font-size: 32px;
+	font-weight: 700;
+	position: absolute;
+	top: 18%;
+	left: 35%;
+}
+.movie_details > div {
+	color: #fff !important;
+	font-size: 32px;
+	font-weight: 700;
+	position: absolute;
+	top: 22%;
+	left: 35%;
+}
+
+iframe {
+	border-radius: 20px;
+}
+
+#overview {
+	color: #fff !important;
+	font-size: 14px;
+	position: absolute;
+	top: 28%;
+	left: 35%;
+}
+
+#overview p {
+	font-size: 20px;
+}

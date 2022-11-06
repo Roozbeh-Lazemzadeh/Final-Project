@@ -16,7 +16,7 @@
 	height: 50px;
 	padding-top: 0.5rem;
 }
-.navigat > ul {
+.navigate > ul {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -24,7 +24,7 @@
 	gap: 50px;
 }
 
-.navigat ul li a {
+.navigate ul li a {
 	text-decoration: none;
 	color: #d1d0cf;
 	cursor: pointer;
@@ -32,10 +32,10 @@
 	transition: 0.5s;
 }
 
-.navigat ul li a:hover {
+.navigate ul li a:hover {
 	color: #fff;
 }
-.navigat ul li:hover .UlExtension {
+.navigate ul li:hover .UlExtension {
 	display: block;
 }
 .UlExtension {

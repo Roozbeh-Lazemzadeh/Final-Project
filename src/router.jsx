@@ -8,10 +8,15 @@ import Header from "./component/header/Header";
 import SectionHeader from "./component/body/SectionHeader";
 import SignIn from "./component/form/SignIn";
 import Footer from "./component/Footer/Footer";
+import UserProvider from "./context/UserContext";
 
 export const router = createBrowserRouter([
 	{
-		element: <App />,
+		element: (
+			<UserProvider>
+				<App />
+			</UserProvider>
+		),
 		children: [
 			{
 				path: "/",

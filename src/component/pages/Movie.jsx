@@ -58,7 +58,7 @@ export default function Movie() {
 								src={`https://www.youtube.com/embed/${video.key}`}
 							></iframe>
 						)),
-					0
+					500
 				)}
 			</div>
 			<div>

@@ -7,7 +7,7 @@ import Header from "../header/Header";
 import "../../module/movie.css";
 
 export default function Movie() {
-	const [movie, setMovie] = useState([]);
+	const [movie, setMovie] = useState([null]);
 
 	const { media_type, movieId } = useParams();
 	let mediaType;
@@ -79,7 +79,7 @@ export default function Movie() {
 			</div>
 
 			<div id="overview">
-				<p>{"Overview"}</p>
+				<p>{movie ? "Overview" : ""}</p>
 				{movie.overview}
 			</div>
 

@@ -22,4 +22,24 @@
 	background-size: cover !important;
 	object-fit: cover !important;
 	transition: all 0.5s;
+	height: 500px;
+	padding: 10px 0;
+	position: relative;
+}
+.forBg::before {
+	content: "";
+	position: absolute;
+	background-image: linear-gradient(
+		to bottom,
+		rgba(0, 0, 0, 0.622),
+		rgba(0, 0, 0, 0.9)
+	);
+	top: 0;
+	left: 0;
+	height: 500px;
+	width: 100%;
+}
+
+.BringFront {
+	z-index: 2;
 }

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 //api-key & baseurl
 const api_key = "e73f257fc4704818fcdc0479ca01561d";
@@ -11,7 +12,9 @@ const baseURL = "https://api.themoviedb.org/3";
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
+	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	const [status, setStatus] = useState(0);
 
@@ -56,15 +59,20 @@ export default function UserProvider({ children }) {
 
 			setSession(session.data.session_id);
 			localStorage.setItem("session", session.data.session_id);
+
+			navigate("/", { replace: true });
 		} catch {
 			toast.error("Invalid username or password.", {
 				style: { backgroundColor: "#eec932", color: "#000" },
 			});
+			setLoading(false);
 		}
 	}
 	//
 	return (
-		<UserContext.Provider value={{ user, login, session, status }}>
+		<UserContext.Provider
+			value={{ user, login, session, status, loading, setLoading }}
+		>
 			{children}
 		</UserContext.Provider>
 	);

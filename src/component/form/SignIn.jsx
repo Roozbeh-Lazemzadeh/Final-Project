@@ -1,11 +1,13 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/UserContext";
 import "./SignIn.css";
 import toast from "react-hot-toast";
+import { Space, Spin } from "antd";
 export default function SignIn() {
 	//define consumer
 	const value = useContext(UserContext);
+	//function handel Loading
 
 	//function handel form
 	function handelForm(e) {
@@ -16,10 +18,9 @@ export default function SignIn() {
 			toast.error("Please fill the blanks", {
 				style: { backgroundColor: "#eec932", color: "#000" },
 			});
-		} else if (value.status !== 200) {
-			console.log("loading...");
 		} else {
 			value.login(username.value, passWord.value);
+			value.setLoading(true);
 		}
 	}
 	//
@@ -31,15 +32,6 @@ export default function SignIn() {
 					<form className="login_page_form" onSubmit={handelForm}>
 						<div className="login_page_form_head">
 							<h1 className="login_page_form_head_title">LOGIN</h1>
-							{/* <div className="login_page_form_head_link">
-								  Sig
-								<a
-									href="https://hexdownload.co/auth/register"
-									className="login_page_form_head_link_txt"
-								>
-									ثبت نام کنید
-								</a>
-							</div> */}
 						</div>
 						<div className="login_page_form_item">
 							<label className="login_page_form_item_label" htmlFor="mobile">
@@ -67,17 +59,27 @@ export default function SignIn() {
 								autoComplete="off"
 							/>
 						</div>
+
 						<div className="login_page_form_actions">
 							<button type="submit" className="login_page_form_actions_submit">
 								<span className="login_page__form__actions__submit__txt">
 									LOGIN
 								</span>
 							</button>
+							<div style={{ display: "flex", justifyContent: "center" }}>
+								{value.loading ? (
+									<Space size="middle">
+										<Spin size="large" />
+									</Space>
+								) : (
+									""
+								)}
+							</div>
 						</div>
 					</form>
 				</div>
 			</div>
-			<div className="footer">
+			{/* <div className="footer">
 				<div className="footer__links">
 					<a href="https://hexdownload.co" className="footer__links__item">
 						خانه
@@ -95,7 +97,7 @@ export default function SignIn() {
 						گزارش باگ
 					</a>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

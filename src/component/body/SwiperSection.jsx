@@ -43,17 +43,19 @@ export default function SwiperSection() {
 	}, [categorie]);
 
 	return (
-		<>
+		<div
+			style={{
+				background: `url(${Bg})`,
+			}}
+			className="forBg"
+		>
 			<SectionHeader
+				className="BringFront"
 				textH3={"Free To Watch"}
 				mediaType={mediaType}
 				setMediaType={setMediaType}
 			/>
 			<Swiper
-				style={{
-					background: `url(${Bg})`,
-				}}
-				className="forBg"
 				modules={[Autoplay]}
 				spaceBetween={15}
 				slidesPerView={2}
@@ -102,6 +104,6 @@ export default function SwiperSection() {
 					</SwiperSlide>
 				))}
 			</Swiper>
-		</>
+		</div>
 	);
 }

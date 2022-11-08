@@ -5,6 +5,7 @@
 	margin: 100px 0 10px 10px;
 	align-items: center;
 	justify-content: space-between;
+	z-index: 2;
 }
 .ant-radio-group {
 	display: flex !important;
@@ -37,6 +38,7 @@
 	color: #fff;
 	font-size: 1.4rem;
 	margin: 0 !important;
+	z-index: 1000;
 }
 
 .ant-radio-button-wrapper:first-child {

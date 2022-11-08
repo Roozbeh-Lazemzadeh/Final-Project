@@ -16,6 +16,8 @@ export default function SignIn() {
 			toast.error("Please fill the blanks", {
 				style: { backgroundColor: "#eec932", color: "#000" },
 			});
+		} else if (value.status !== 200) {
+			console.log("loading...");
 		} else {
 			value.login(username.value, passWord.value);
 		}

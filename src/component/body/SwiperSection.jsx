@@ -6,10 +6,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 import SectionHeader from "./SectionHeader";
+import "../../module/swiper.css";
 
 export default function SwiperSection() {
+	const [Bg, setBg] = useState(
+		"https://image.tmdb.org/t/p/w780//6oZeEu1GDILdwezmZ5e2xWISf1C.jpg"
+	);
 	const [mediaType, setMediaType] = useState("movie");
 	const [movies, setMovies] = useState([]);
+
+	function handleBg(path) {
+		console.log(posterImg(path, "original"));
+		return setBg(posterImg(path, "original"));
+	}
 	let categorie;
 	if (mediaType == "movie") {
 		categorie = "movie";
@@ -41,6 +50,10 @@ export default function SwiperSection() {
 				setMediaType={setMediaType}
 			/>
 			<Swiper
+				style={{
+					background: `url(${Bg})`,
+				}}
+				className="forBg"
 				modules={[Autoplay]}
 				spaceBetween={15}
 				slidesPerView={2}
@@ -50,8 +63,8 @@ export default function SwiperSection() {
 				onSwiper={(swiper) => console.log(swiper)}
 				breakpoints={{
 					1024: {
-						slidesPerView: 8,
-						spaceBetween: 10,
+						slidesPerView: 6,
+						spaceBetween: 20,
 					},
 					640: {
 						slidesPerView: 4,
@@ -68,7 +81,10 @@ export default function SwiperSection() {
 				}}
 			>
 				{movies.map((movie) => (
-					<SwiperSlide key={movie.id}>
+					<SwiperSlide
+						key={movie.id}
+						onMouseOver={() => handleBg(movie.backdrop_path)}
+					>
 						<NavLink to={`/${categorie}/${movie.id}`}>
 							<div className="item">
 								<img
@@ -77,7 +93,10 @@ export default function SwiperSection() {
 									className="img"
 								/>
 
-								<div className="name">{movie.title}</div>
+								<div className="name">
+									{movie.title}
+									{movie.name}
+								</div>
 							</div>
 						</NavLink>
 					</SwiperSlide>

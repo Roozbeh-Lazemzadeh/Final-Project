@@ -28,7 +28,7 @@ export default function UserProvider({ children }) {
 		getUserData();
 	}, [session]);
 
-	//function for login in componenet Signin
+	//function for login in component Sign in
 	async function login(username, password) {
 		try {
 			const tokenResult = await axios.get(

@@ -17,23 +17,38 @@ export default function Movie() {
 		mediaType = "tv";
 	}
 
+	// async function getMovie() {
+	// 	try {
+	// 		const { data } = await axios.get(
+	// 			`${baseUrl}/${mediaType}/${movieId}?api_key=${apikey}&append_to_response=videos`
+	// 		);
+
+	// 		setMovie(data);
+	// 	} catch {
+	// 		console.log("ERRRROR");
+	// 	}
+	// }
+	// useEffect(() => {
+	// 	getMovie();
+	// }, [movieId]);
+	// console.log(movie);
+
+	// if (!movie) return null;
 	async function getMovie() {
 		try {
-			const { data } = await axios.get(
+			let response = await fetch(
 				`${baseUrl}/${mediaType}/${movieId}?api_key=${apikey}&append_to_response=videos`
 			);
-
+			let data = await response.json();
 			setMovie(data);
+			console.log(data);
 		} catch {
-			console.log("ERRRROR");
+			console.log("error");
 		}
 	}
 	useEffect(() => {
 		getMovie();
 	}, [movieId]);
-	console.log(movie);
-
-	if (!movie) return null;
 
 	return (
 		<>
@@ -49,21 +64,17 @@ export default function Movie() {
 				<span>{mediaType == "movie" ? movie.title : movie.name}</span>
 			</div>
 			<div>
-				{setTimeout(
-					() =>
-						movie.videos.results.map((video) => (
-							<iframe
-								width="420"
-								height="315"
-								src={`https://www.youtube.com/embed/${video.key}`}
-							></iframe>
-						)),
-					500
-				)}
+				{/* {movie.videos.results.map((video) => (
+					<iframe
+						width="420"
+						height="315"
+						src={`https://www.youtube.com/embed/${video.key}`}
+					></iframe>
+				))} */}
 			</div>
 			<div>
-				{/* {movie.genres.map((video) => (
-					<span>{video.name}</span>
+				{/* {movie.genres.map((genre) => (
+					<span>{genre.name}</span>
 				))} */}
 			</div>
 
@@ -76,3 +87,17 @@ export default function Movie() {
 		</>
 	);
 }
+
+// {
+// 	setTimeout(
+// 		() =>
+// 			movie.videos.results.map((video) => (
+// 				<iframe
+// 					width="420"
+// 					height="315"
+// 					src={`https://www.youtube.com/embed/${video.key}`}
+// 				></iframe>
+// 			)),
+// 		500
+// 	);
+// }

@@ -15,3 +15,11 @@
 .name:hover {
 	color: #fcd535;
 }
+
+.forBg {
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: cover !important;
+	object-fit: cover !important;
+	transition: all 0.5s;
+}

@@ -68,10 +68,15 @@ export default function UserProvider({ children }) {
 			setLoading(false);
 		}
 	}
+	function logOut() {
+		setUser(null);
+		setSession(null);
+		localStorage.clear();
+	}
 	//
 	return (
 		<UserContext.Provider
-			value={{ user, login, session, status, loading, setLoading }}
+			value={{ user, login, session, status, loading, setLoading, logOut }}
 		>
 			{children}
 		</UserContext.Provider>

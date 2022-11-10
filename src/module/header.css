@@ -10,10 +10,14 @@
 	gap: 50px;
 	align-items: center;
 	padding: 0px 20px;
+	height: 60px;
+}
+.logo {
+	height: 80%;
 }
 
 .logo img {
-	height: 50px;
+	height: 100%;
 	padding-top: 0.5rem;
 }
 .navigate > ul {
@@ -22,6 +26,7 @@
 	justify-content: center;
 	list-style: none;
 	gap: 50px;
+	margin: 0;
 }
 
 .navigate ul li a {
@@ -59,6 +64,8 @@
 	padding: 10px 10px;
 	cursor: pointer;
 	border-radius: 10px;
+	font-size: 14px;
+	color: #fff;
 }
 .UlExtension li:hover {
 	background-color: #fcd535;
@@ -77,6 +84,7 @@
 	background-color: #fcd535;
 	border-radius: 13px;
 	border: 1px solid #fcd535;
+	padding: 5px 5px;
 }
 .ant-btn.ant-btn-primary.ant-btn-lg:hover {
 	background-color: #ffee5b;
@@ -89,8 +97,18 @@
 	gap: 20px;
 	justify-content: center;
 }
+.ant-btn > .anticon + span {
+	font-size: 13px;
+}
 
 .anticon.anticon-user,
 .anticon.anticon-search {
 	padding-left: 5px;
+}
+
+.anticon.anticon-logout {
+	color: tomato !important;
+	font-size: 20px !important;
+	padding-top: 10px !important;
+	cursor: pointer;
 }

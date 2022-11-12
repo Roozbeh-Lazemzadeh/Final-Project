@@ -151,3 +151,9 @@
 	line-height: 30px;
 	color: #d1d0cf;
 }
+
+.no_results {
+	color: #d1d0cf;
+	font-size: 18px;
+	margin-left: 30px;
+}

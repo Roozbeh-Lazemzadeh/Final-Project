@@ -5,18 +5,14 @@ import { NavLink } from "react-router-dom";
 
 export default function Header() {
 	return (
-		<navigation id="masthead" className="header">
+		<nav id="masthead" className="header">
 			<div className="logo">
 				<NavLink to="/" title="Hex download">
 					<img src={logo}></img>
 				</NavLink>
 			</div>
-			<>
-				<Nav />
-			</>
-			<>
-				<Search />
-			</>
-		</navigation>
+			<Nav />
+			<Search />
+		</nav>
 	);
 }

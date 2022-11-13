@@ -29,7 +29,7 @@ export default function SearchResults(props) {
 			setIsLoading(true);
 			try {
 				const { data } = await axios.get(
-					`${baseUrl}/search/movie/?api_key=${apikey}&query=${inputValue}`
+					`${baseUrl}/search/movie?api_key=${apikey}&query=${inputValue}`
 				);
 				console.log(data.results);
 				setResult(data.results);
@@ -59,7 +59,7 @@ export default function SearchResults(props) {
 		if (query)
 			try {
 				const { data } = await axios.get(
-					`${baseUrl}/search/movie/?api_key=${apikey}&query=${query}`
+					`${baseUrl}/search/movie?api_key=${apikey}&query=${query}`
 				);
 				setResult(data.results);
 				setIsLoading(false);

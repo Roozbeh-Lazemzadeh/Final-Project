@@ -19,7 +19,7 @@ export default function Movies() {
 	async function getcard() {
 		try {
 			const { data } = await axios.get(
-				`${baseUrl}/movie/${categories}/?api_key=${apikey}`
+				`${baseUrl}/movie/${categories}?api_key=${apikey}`
 			);
 
 			setMovies(data.results);

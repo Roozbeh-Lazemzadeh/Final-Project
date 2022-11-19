@@ -63,14 +63,16 @@ export default function Search() {
 
 			{value.user ? (
 				<>
-					<Button
-						type="primary"
-						size="large"
-						style={{ textTransform: "capitalize" }}
-						icon={<UserOutlined />}
-					>
-						{value.user.username}
-					</Button>
+					<NavLink to="/profile">
+						<Button
+							type="primary"
+							size="large"
+							style={{ textTransform: "capitalize" }}
+							icon={<UserOutlined />}
+						>
+							{value.user.username}
+						</Button>
+					</NavLink>
 					<LogoutOutlined onClick={showConfirm} />
 				</>
 			) : (

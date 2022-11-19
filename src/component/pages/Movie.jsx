@@ -8,12 +8,27 @@ import "../../module/movie.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 
 export default function Movie() {
-	const [movie, setMovie] = useState();
+	const [movie, setMovie] = useState(null);
+	const [isFavorite, setIsfavorite] = useState(false);
 	const { media_type, movieId } = useParams();
+
 	const value = useContext(UserContext);
 
+	console.log(movieId);
+	console.log(value.favoriteMovie);
+
+	useEffect(() => {
+		if (movie && value.favoriteMovie.length) {
+			const chekFavorite = value.favoriteMovie.find(
+				(item) => item.id === movie?.id
+			);
+			setIsfavorite(Boolean(chekFavorite));
+			console.log(chekFavorite);
+		}
+	}, [movie, isFavorite]);
 	// get media-type
 	let mediaType;
 	if (media_type == "movie") {
@@ -30,7 +45,6 @@ export default function Movie() {
 			);
 			let data = await response.json();
 			setMovie(data);
-			console.log(data);
 		} catch {
 			console.log("error");
 		}
@@ -40,47 +54,46 @@ export default function Movie() {
 		getMovie();
 	}, [movieId]);
 
-	//function to add favorite movie
+	// function to add favorite movie
+
 	async function handelAddFavorite() {
 		if (value.session) {
 			try {
 				const result = await axios.post(
 					`${baseUrl}/account/${value.user.id}/favorite?api_key=${apikey}&session_id=${value.session}`,
-					{ media_type: `${mediaType}`, media_id: movie.id, favorite: true }
+					{
+						media_type: `${mediaType}`,
+						media_id: movie.id,
+						favorite: !isFavorite,
+					}
 				);
-
 				console.log(result);
-				toast.success("film add your favorite list", {
-					style: { backgroundColor: "#eec932", color: "#000" },
-					position: "center",
-				});
+
+				toast.success(
+					`${movie.title}${
+						isFavorite ? " Remove from favorite" : " Add to favorite"
+					}`,
+					{
+						style: { backgroundColor: "#eec932", color: "#000" },
+						position: "center",
+					}
+				);
 			} catch {
-				console.log("err");
+				console.log("error");
 			}
 		} else {
 			console.log("err");
 		}
 	}
 
-	//function to remove favorite movie
-	async function handelRemoveavorite() {
+	async function getFavoriteMove() {
 		if (value.session) {
 			try {
-				const result = await axios.post(
-					`${baseUrl}/account/${value.user.id}/favorite?api_key=${apikey}&session_id=${value.session}`,
-					{ media_type: `${mediaType}`, media_id: movie.id, favorite: false }
-				);
-
-				console.log(result);
-				toast.success("film add your favorite list", {
-					style: { backgroundColor: "#eec932", color: "#000" },
-					position: "center",
-				});
+				const favorite = await axios.get(`
+        ${baseUrl}/account/${value.user.id}/favorite/movies?api_key=${apikey}&language=en-US&sort_by=created_at.asc&page=1`);
 			} catch {
-				console.log("err");
+				console.log("favorite");
 			}
-		} else {
-			console.log("err");
 		}
 	}
 
@@ -95,10 +108,44 @@ export default function Movie() {
 							background: `url(${posterImg(movie.backdrop_path, "original")})`,
 						}}
 					></div>
-					<img src={posterImg(movie.poster_path)} id="poster_img" />
-					<div className="movie_details">
-						<span>{mediaType == "movie" ? movie.title : movie.name}</span>
+					<div className="contain-box">
+						<img src={posterImg(movie.poster_path)} id="poster_img" />
+						<div className="movie_details">
+							<span>{mediaType == "movie" ? movie.title : movie.name}</span>
+						</div>
+						<div id="overview">
+							<p>{movie ? "Overview" : ""}</p>
+							{movie.overview}
+							<div className="div-btn">
+								{isFavorite ? (
+									<>
+										<button
+											className="custom-btn"
+											style={{ border: `1px solid #fcd535` }}
+											onClick={handelAddFavorite}
+										>
+											<HeartFilled
+												style={{ fontSize: "20px", color: "#fcd535" }}
+											/>
+										</button>
+										<span>Remove from favorite</span>
+									</>
+								) : (
+									<>
+										<button
+											className="custom-btn"
+											style={{ border: `1px solid #fff` }}
+											onClick={handelAddFavorite}
+										>
+											<HeartOutlined style={{ fontSize: "20px" }} />
+										</button>
+										<span>add to favorite</span>
+									</>
+								)}
+							</div>
+						</div>
 					</div>
+
 					<div>
 						{movie.videos.results.map((video) => (
 							<iframe
@@ -107,19 +154,6 @@ export default function Movie() {
 								src={`https://www.youtube.com/embed/${video.key}`}
 							></iframe>
 						))}
-					</div>
-
-					<div id="overview">
-						<p>{movie ? "Overview" : ""}</p>
-						{movie.overview}
-						<div className="div-btn">
-							<button className="custom-btn" onClick={handelAddFavorite}>
-								Add favorite
-							</button>
-							<button className="custom-btn" onClick={handelRemoveavorite}>
-								Remove favorite
-							</button>
-						</div>
 					</div>
 				</>
 			) : (

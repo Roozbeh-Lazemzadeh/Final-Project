@@ -12,73 +12,101 @@ const baseURL = "https://api.themoviedb.org/3";
 export const UserContext = createContext();
 
 export default function UserProvider({ children }) {
-	const navigate = useNavigate();
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-	const [status, setStatus] = useState(0);
+  const [status, setStatus] = useState(0);
 
-	const [session, setSession] = useState(() => localStorage.getItem("session"));
+  const [session, setSession] = useState(() => localStorage.getItem("session"));
 
-	async function getUserData() {
-		const getUser = await axios.get(
-			`${baseURL}/account?api_key=${api_key}&session_id=${session}`
-		);
-		setUser(getUser.data);
-	}
-	//check null or fill session
-	useEffect(() => {
-		getUserData();
-	}, [session]);
+  const [favoriteMovie, setFavoriteMovie] = useState([]);
 
-	//function for login in component Sign in
-	async function login(username, password) {
-		try {
-			const tokenResult = await axios.get(
-				`${baseURL}/authentication/token/new?api_key=${api_key}`
-			);
-			// console.log(tokenResult.data.request_token);
+  const [watchListMove, setWatchList] = useState([]);
 
-			const authentication = await axios.post(
-				` ${baseURL}/authentication/token/validate_with_login?api_key=${api_key}`,
-				{
-					username,
-					password,
-					request_token: tokenResult.data.request_token,
-				}
-			);
+  async function getUserData() {
+    const getUser = await axios.get(
+      `${baseURL}/account?api_key=${api_key}&session_id=${session}`
+    );
 
-			const session = await axios.post(
-				`${baseURL}/authentication/session/new?api_key=${api_key}`,
-				{
-					request_token: tokenResult.data.request_token,
-				}
-			);
+    //favorite Movie
+    const favorite = await axios.get(`
+     ${baseURL}/account/${getUser.data.id}/favorite/movies?api_key=${api_key}&session_id=${session}`);
+    console.log(favorite.data.results);
 
-			setStatus(tokenResult.status);
+    //get watchList
+    const watchList = await axios.get(`
+    ${baseURL}/account/${getUser.data.id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
+    console.log(watchList.data.results);
+    setWatchList(watchList.data.results);
 
-			setSession(session.data.session_id);
-			localStorage.setItem("session", session.data.session_id);
+    setFavoriteMovie(favorite.data.results);
+    setUser(getUser.data);
+  }
+  //check null or fill session
+  useEffect(() => {
+    getUserData();
+  }, [session]);
 
-			navigate("/", { replace: true });
-		} catch {
-			toast.error("Invalid username or password.", {
-				style: { backgroundColor: "#eec932", color: "#000" },
-			});
-			setLoading(false);
-		}
-	}
-	function logOut() {
-		setUser(null);
-		setSession(null);
-		localStorage.clear();
-	}
-	//
-	return (
-		<UserContext.Provider
-			value={{ user, login, session, status, loading, setLoading, logOut }}
-		>
-			{children}
-		</UserContext.Provider>
-	);
+  //function for login in component Sign in
+  async function login(username, password) {
+    try {
+      const tokenResult = await axios.get(
+        `${baseURL}/authentication/token/new?api_key=${api_key}`
+      );
+      // console.log(tokenResult.data.request_token);
+
+      const authentication = await axios.post(
+        ` ${baseURL}/authentication/token/validate_with_login?api_key=${api_key}`,
+        {
+          username,
+          password,
+          request_token: tokenResult.data.request_token,
+        }
+      );
+
+      const session = await axios.post(
+        `${baseURL}/authentication/session/new?api_key=${api_key}`,
+        {
+          request_token: tokenResult.data.request_token,
+        }
+      );
+
+      setStatus(tokenResult.status);
+
+      setSession(session.data.session_id);
+      localStorage.setItem("session", session.data.session_id);
+
+      navigate("/", { replace: true });
+    } catch {
+      toast.error("Invalid username or password.", {
+        style: { backgroundColor: "#eec932", color: "#000" },
+      });
+      setLoading(false);
+    }
+  }
+  function logOut() {
+    setUser(null);
+    setSession(null);
+    localStorage.clear();
+  }
+  //
+  return (
+    <UserContext.Provider
+      value={{
+        user,
+        login,
+        session,
+        status,
+        loading,
+        setLoading,
+        logOut,
+        favoriteMovie,
+        getUserData,
+        watchListMove,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }

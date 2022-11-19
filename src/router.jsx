@@ -9,6 +9,7 @@ import SectionHeader from "./component/body/SectionHeader";
 import SignIn from "./component/form/SignIn";
 import Footer from "./component/Footer/Footer";
 import UserProvider from "./context/UserContext";
+import Profile from "./component/pages/Profile";
 
 export const router = createBrowserRouter([
 	{
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/movies/:categories",
 				element: <Movies />,
+			},
+			{
+				path: "/profile",
+				element: <Profile />,
 			},
 		],
 	},

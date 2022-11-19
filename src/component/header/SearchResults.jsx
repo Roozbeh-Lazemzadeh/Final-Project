@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
 import axios from "axios";
 import { Space, Spin } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function SearchResults(props) {
 	const [inputValue, setInputValue] = useState("");
 	const [query, setQuery] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [result, setResult] = useState([]);
+	const navigate = useNavigate();
+
+    
 
 	//handle searchbox start
 	if (props.menuOpen) document.body.style.overflow = "hidden";
@@ -128,7 +131,8 @@ export default function SearchResults(props) {
 									/>
 									<div className="search_box_body_results_item_details">
 										<NavLink
-											to={`/movie/${item.id}`}
+										onClick={()=>useNavigate(`/movie/${item.id}`)}
+											// to={`/movie/${item.id}`}
 											className="search_box_body_results_item_details_title"
 										>
 											<h3 className="search_box_body_results_item_details_title_txt">

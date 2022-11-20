@@ -23,11 +23,15 @@ export default function SearchResults(props) {
     setResult([]);
   }
   //handle searchbox end
+  function handleChange(e) {
+    setInputValue(e.target.value);
+    setIsLoading(true);
+  }
 
   //suggestion result onChange start
   async function giveSuggestion() {
-    if (inputValue) {
-      setIsLoading(true);
+    if (inputValue.length) {
+      setIsLoading(false);
       try {
         const { data } = await axios.get(
           `${baseUrl}/search/movie?api_key=${apikey}&query=${inputValue}`
@@ -38,6 +42,8 @@ export default function SearchResults(props) {
         setIsLoading(false);
         console.log("error");
       }
+    } else {
+      setIsLoading(false);
     }
   }
   useEffect(() => {
@@ -108,7 +114,7 @@ export default function SearchResults(props) {
             className="search_box_body_form_input"
             placeholder="Search here..."
             autocomplete="off"
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => handleChange(e)}
           />
           <div>
             {isLoading && (
@@ -129,13 +135,11 @@ export default function SearchResults(props) {
                   />
                   <div className="search_box_body_results_item_details">
                     <NavLink
-                      // onClick={()=>useNavigate(`/movie/${item.id}`)}
                       to={`/movie/${item.id}`}
                       className="search_box_body_results_item_details_title"
                     >
                       <h3 className="search_box_body_results_item_details_title_txt">
-                        {`${item.title} (
-											${item.release_date.slice(0, 4)})`}
+                        {`${item.title} (${item.release_date.slice(0, 4)})`}
                       </h3>
                     </NavLink>
                     <span className="search_box_body_results_item_details_imdb">
@@ -154,7 +158,7 @@ export default function SearchResults(props) {
                 </div>
               ))
             : inputValue.length != "" && (
-                <h6 className="no_results">No results not found!</h6>
+                <h6 className="no_results">No results found!</h6>
               )}
         </div>
       </div>

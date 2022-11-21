@@ -35,7 +35,6 @@ export default function Trailers() {
         `${baseUrl}/${mediaType}/popular?api_key=${apikey}&append_to_response=videos`
       );
       setMovies(data.results);
-      console.log(data.results);
     } catch {
       console.log("ERRRROR");
     }
@@ -183,6 +182,7 @@ export default function Trailers() {
               open={isModalOpen}
               onCancel={handleCancel}
               footer={null}
+              style={{ backgroundColor: "black", padding: 0 }}
             >
               <iframe
                 className="iframe"

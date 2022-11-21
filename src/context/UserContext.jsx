@@ -32,12 +32,11 @@ export default function UserProvider({ children }) {
     //favorite Movie
     const favorite = await axios.get(`
      ${baseURL}/account/${getUser.data.id}/favorite/movies?api_key=${api_key}&session_id=${session}`);
-    console.log(favorite.data.results);
 
     //get watchList
     const watchList = await axios.get(`
     ${baseURL}/account/${getUser.data.id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
-    console.log(watchList.data.results);
+
     setWatchList(watchList.data.results);
 
     setFavoriteMovie(favorite.data.results);

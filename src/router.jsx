@@ -12,47 +12,47 @@ import UserProvider from "./context/UserContext";
 import Profile from "./component/pages/Profile";
 
 export const router = createBrowserRouter([
-	{
-		element: (
-			<UserProvider>
-				<App />
-			</UserProvider>
-		),
-		children: [
-			{
-				path: "/",
-				element: (
-					<>
-						<Header />
-						<Home />
-						<Footer />
-					</>
-				),
-			},
-			{
-				path: "/login",
-				element: (
-					<>
-						<SignIn />
-					</>
-				),
-			},
-			{
-				path: "/:media_type/:movieId",
-				element: (
-					<>
-						<Movie />
-					</>
-				),
-			},
-			{
-				path: "/movies/:categories",
-				element: <Movies />,
-			},
-			{
-				path: "/profile",
-				element: <Profile />,
-			},
-		],
-	},
+  {
+    element: (
+      <UserProvider>
+        <App />
+      </UserProvider>
+    ),
+    children: [
+      {
+        path: "/",
+        element: (
+          <>
+            <Header />
+            <Home />
+            <Footer />
+          </>
+        ),
+      },
+      {
+        path: "/login",
+        element: (
+          <>
+            <SignIn />
+          </>
+        ),
+      },
+      {
+        path: "/:media_type/:movieId",
+        element: (
+          <>
+            <Movie />
+          </>
+        ),
+      },
+      {
+        path: "/get/:types/:categories/",
+        element: <Movies />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+    ],
+  },
 ]);

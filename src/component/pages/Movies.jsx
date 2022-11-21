@@ -10,35 +10,36 @@ import { Pagination } from "antd";
 import "../../module/movies.css";
 
 export default function Movies() {
+  const [totalPage, setTotalPage] = useState();
   const [movies, setMovies] = useState([]);
   const { types, categories } = useParams();
-  console.log(types, categories);
-
   //pagination
   const [current, setCurrent] = useState(1);
+  //pagination
 
   async function getcard() {
     try {
       const { data } = await axios.get(
-        `${baseUrl}/${types}/${categories}?api_key=${apikey}`
+        `${baseUrl}/${types}/${categories}?api_key=${apikey}&page=${current}`
       );
 
       setMovies(data.results);
-      console.log(data.results);
+      setTotalPage(data.total_results);
+      console.log(data);
     } catch {
       console.log("ERRRROR");
     }
   }
   useEffect(() => {
     getcard();
-  }, [categories]);
+  }, [categories, current, types]);
 
   //pagination code
 
   function onChange(number) {
     setCurrent(number);
-    console.log(current);
   }
+  //pagination
 
   return (
     <>
@@ -46,7 +47,7 @@ export default function Movies() {
       <Row justify="center" gutter={16} id="moviesCard">
         {movies.map(
           (movie) =>
-            movies.indexOf(movie) < 12 && (
+            movies.indexOf(movie) < 18 && (
               <Col xs={12} sm={8} md={6} lg={4} key={movie.id}>
                 {/* <NavLink to={`/${movie.media_type}/${movie.id}`}> */}
                 <Card
@@ -54,7 +55,7 @@ export default function Movies() {
                   title={movie.title}
                   name={movie.name}
                   vote_average={movie.vote_average}
-                  media_type={movie.media_type}
+                  media_type={types === "movie" ? "movie" : "tv"}
                 />
                 {/* </NavLink> */}
               </Col>
@@ -64,7 +65,7 @@ export default function Movies() {
       <Pagination
         defaultCurrent={1}
         current={current}
-        total={500}
+        total={totalPage && Math.ceil(totalPage / 18)}
         onChange={(number) => onChange(number)}
         id="pagination"
       />

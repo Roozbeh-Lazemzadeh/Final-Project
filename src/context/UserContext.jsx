@@ -32,6 +32,9 @@ export default function UserProvider({ children }) {
     //call function favorite Movie
     getFavoriteMove(data.id);
 
+    //call function favorite tv
+    getFavoriteTv(data.id);
+
     //call function getwatchListmovie
     getWatchListMovie(data.id);
 
@@ -58,7 +61,6 @@ export default function UserProvider({ children }) {
   async function getWatchListMovie(id) {
     const watchList = await axios.get(`
     ${baseURL}/account/${id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
-    console.log(watchList.data.results);
     setWatchList(watchList.data.results);
   }
 
@@ -66,7 +68,6 @@ export default function UserProvider({ children }) {
   async function getWatchListtv(id) {
     const watchList = await axios.get(`
     ${baseURL}/account/${id}/watchlist/tv?api_key=${api_key}&session_id=${session}`);
-    console.log(watchList.data.results);
     setWatchList(watchList.data.results);
   }
 

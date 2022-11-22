@@ -98,7 +98,7 @@ export default function Movie() {
 
       toast.success(
         `${movie.title}${
-          isFavorite ? " Remove from favorite" : " Add to favorite"
+          isFavorite ? " Removed from favorite" : " Added to favorite"
         }`,
         {
           style: { backgroundColor: "#eec932", color: "#000" },
@@ -128,7 +128,7 @@ export default function Movie() {
       getWatchListtv(user.id);
       toast.success(
         `${movie.title}${
-          isWatchList ? " Remove from watchList" : " Add to watchList"
+          isWatchList ? " Removed from watchList" : " Added to watchList"
         }`,
         {
           style: { backgroundColor: "#eec932", color: "#000" },

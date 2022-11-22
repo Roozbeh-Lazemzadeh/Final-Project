@@ -25,7 +25,6 @@ export default function Movies() {
 
       setMovies(data.results);
       setTotalPage(data.total_results);
-      console.log(data);
     } catch {
       console.log("ERRRROR");
     }

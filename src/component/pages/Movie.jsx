@@ -8,23 +8,54 @@ import "../../module/movie.css";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import {
+  BookFilled,
+  BookOutlined,
+  HeartFilled,
+  HeartOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 
 export default function Movie() {
   const [movie, setMovie] = useState(null);
+
   const [isFavorite, setIsfavorite] = useState(false);
+
   const { media_type, movieId } = useParams();
 
-  const value = useContext(UserContext);
+  const [isWatchList, setIsWatchlist] = useState(false);
 
+  const {
+    user,
+    session,
+    favoriteMovie,
+    getFavoriteMove,
+    watchListMove,
+    getFavoriteTv,
+    getWatchListMovie,
+    getWatchListtv,
+  } = useContext(UserContext);
+
+  //useEffect for favoritemovie
   useEffect(() => {
-    if (movie && value.favoriteMovie.length) {
-      const chekFavorite = value.favoriteMovie.find(
+    if (movie && favoriteMovie.length) {
+      const chekFavorite = favoriteMovie.find((item) => item.id === movie?.id);
+      setIsfavorite(Boolean(chekFavorite));
+      console.log(chekFavorite);
+    }
+  }, [movie, favoriteMovie]);
+
+  //useEffect for watchListMove
+  useEffect(() => {
+    if ((movie, watchListMove.length)) {
+      const checkWtatchList = watchListMove.find(
         (item) => item.id === movie?.id
       );
-      setIsfavorite(Boolean(chekFavorite));
+      setIsWatchlist(Boolean(checkWtatchList));
     }
-  }, [movie, isFavorite]);
+    console.log(isWatchList);
+  }, [movie, watchListMove]);
+
   // get media-type
   let mediaType;
   if (media_type == "movie") {
@@ -53,46 +84,64 @@ export default function Movie() {
   // function to add favorite movie
 
   async function handelAddFavorite() {
-    if (value.session) {
-      try {
-        const result = await axios.post(
-          `${baseUrl}/account/${value.user.id}/favorite?api_key=${apikey}&session_id=${value.session}`,
-          {
-            media_type: `${mediaType}`,
-            media_id: movie.id,
-            favorite: !isFavorite,
-          }
-        );
-        console.log(result);
+    if (session) {
+      const result = await axios.post(
+        `${baseUrl}/account/${user.id}/favorite?api_key=${apikey}&session_id=${session}`,
+        {
+          media_type: `${mediaType}`,
+          media_id: movie.id,
+          favorite: !isFavorite,
+        }
+      );
+      getFavoriteMove(user.id);
+      getFavoriteTv(user.id);
 
-        toast.success(
-          `${movie.title}${
-            isFavorite ? " Remove from favorite" : " Add to favorite"
-          }`,
-          {
-            style: { backgroundColor: "#eec932", color: "#000" },
-            position: "center",
-          }
-        );
-      } catch {
-        console.log("error");
-      }
+      toast.success(
+        `${movie.title}${
+          isFavorite ? " Remove from favorite" : " Add to favorite"
+        }`,
+        {
+          style: { backgroundColor: "#eec932", color: "#000" },
+          position: "center",
+        }
+      );
     } else {
-      console.log("err");
+      toast.error("Please Login", {
+        style: { backgroundColor: "#eec932", color: "#000" },
+        position: "center",
+      });
     }
   }
-
-  async function getFavoriteMove() {
-    if (value.session) {
-      try {
-        const favorite = await axios.get(`
-        ${baseUrl}/account/${value.user.id}/favorite/movies?api_key=${apikey}&language=en-US&sort_by=created_at.asc&page=1`);
-      } catch {
-        console.log("favorite");
-      }
+  //function to add watchlist
+  async function handelAddWatchList() {
+    if (session) {
+      const result = await axios.post(
+        `${baseUrl}/account/${user.id}/watchlist?api_key=${apikey}&session_id=${session}`,
+        {
+          media_type: `${mediaType}`,
+          media_id: movie.id,
+          watchlist: !isWatchList,
+        }
+      );
+      console.log(result);
+      getWatchListMovie(user.id);
+      getWatchListtv(user.id);
+      toast.success(
+        `${movie.title}${
+          isWatchList ? " Remove from watchList" : " Add to watchList"
+        }`,
+        {
+          style: { backgroundColor: "#eec932", color: "#000" },
+          position: "center",
+        }
+      );
+    } else {
+      toast.error("Please Login", {
+        style: { backgroundColor: "#eec932", color: "#000" },
+        position: "center",
+      });
     }
   }
-
   return (
     <>
       <Header />
@@ -135,22 +184,47 @@ export default function Movie() {
                     >
                       <HeartOutlined style={{ fontSize: "20px" }} />
                     </button>
-                    <span>add to favorite</span>
+                    <span>Add to favorite</span>
+                  </>
+                )}
+                {isWatchList ? (
+                  <>
+                    <button
+                      className="custom-btn"
+                      style={{ border: `1px solid #fcd535` }}
+                      onClick={handelAddWatchList}
+                    >
+                      <BookFilled
+                        style={{ fontSize: "20px", color: "#fcd535" }}
+                      />
+                    </button>
+                    <span>Remove to watchList</span>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="custom-btn"
+                      style={{ border: `1px solid #fff` }}
+                      onClick={handelAddWatchList}
+                    >
+                      <BookOutlined style={{ fontSize: "20px" }} />
+                    </button>
+                    <span>Add to watchList</span>
                   </>
                 )}
               </div>
             </div>
           </div>
 
-          {/* <div>
-            {movie.videos.results.map((video) => (
+          <div>
+            {/* {movie.videos.results.map((video) => (
               <iframe
                 width="420"
                 height="315"
                 src={`https://www.youtube.com/embed/${video.key}`}
               ></iframe>
-            ))}
-          </div> */}
+            ))} */}
+          </div>
         </>
       ) : (
         <h1>Loading</h1>

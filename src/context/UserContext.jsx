@@ -25,23 +25,51 @@ export default function UserProvider({ children }) {
   const [watchListMove, setWatchList] = useState([]);
 
   async function getUserData() {
-    const getUser = await axios.get(
+    const { data } = await axios.get(
       `${baseURL}/account?api_key=${api_key}&session_id=${session}`
     );
 
-    //favorite Movie
-    const favorite = await axios.get(`
-     ${baseURL}/account/${getUser.data.id}/favorite/movies?api_key=${api_key}&session_id=${session}`);
+    //call function favorite Movie
+    getFavoriteMove(data.id);
 
-    //get watchList
-    const watchList = await axios.get(`
-    ${baseURL}/account/${getUser.data.id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
+    //call function getwatchListmovie
+    getWatchListMovie(data.id);
 
-    setWatchList(watchList.data.results);
+    //call function getwatchListtv
+    getWatchListtv(data.id);
 
-    setFavoriteMovie(favorite.data.results);
-    setUser(getUser.data);
+    setUser(data);
   }
+
+  //favorite Movie
+  async function getFavoriteMove(id) {
+    const favorite = await axios.get(`
+     ${baseURL}/account/${id}/favorite/movies?api_key=${api_key}&session_id=${session}`);
+    setFavoriteMovie(favorite.data.results);
+  }
+  //favorite tv
+  async function getFavoriteTv(id) {
+    const favorite = await axios.get(`
+     ${baseURL}/account/${id}/favorite/tv?api_key=${api_key}&session_id=${session}`);
+    setFavoriteMovie(favorite.data.results);
+  }
+
+  //get watchList movies
+  async function getWatchListMovie(id) {
+    const watchList = await axios.get(`
+    ${baseURL}/account/${id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
+    console.log(watchList.data.results);
+    setWatchList(watchList.data.results);
+  }
+
+  //get watchList tv
+  async function getWatchListtv(id) {
+    const watchList = await axios.get(`
+    ${baseURL}/account/${id}/watchlist/tv?api_key=${api_key}&session_id=${session}`);
+    console.log(watchList.data.results);
+    setWatchList(watchList.data.results);
+  }
+
   //check null or fill session
   useEffect(() => {
     getUserData();
@@ -77,6 +105,7 @@ export default function UserProvider({ children }) {
       localStorage.setItem("session", session.data.session_id);
 
       navigate("/", { replace: true });
+      setLoading(false);
     } catch {
       toast.error("Invalid username or password.", {
         style: { backgroundColor: "#eec932", color: "#000" },
@@ -101,8 +130,12 @@ export default function UserProvider({ children }) {
         setLoading,
         logOut,
         favoriteMovie,
+        getFavoriteMove,
         getUserData,
         watchListMove,
+        getWatchListMovie,
+        getWatchListtv,
+        getFavoriteTv,
       }}
     >
       {children}

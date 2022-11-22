@@ -139,7 +139,11 @@ export default function SearchResults(props) {
                       className="search_box_body_results_item_details_title"
                     >
                       <h3 className="search_box_body_results_item_details_title_txt">
-                        {`${item.title} (${item.release_date.slice(0, 4)})`}
+                        {`${item.title} (${
+                          item.release_date
+                            ? item.release_date.slice(0, 4)
+                            : "unknown"
+                        })`}
                       </h3>
                     </NavLink>
                     <span className="search_box_body_results_item_details_imdb">

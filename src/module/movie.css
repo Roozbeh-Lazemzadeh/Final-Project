@@ -35,21 +35,23 @@
   height: 65%;
   width: 25%;
 }
-.movie_details > span {
-  color: #fff !important;
-  font-size: 32px;
-  font-weight: 700;
+
+.movie_details {
   position: absolute;
   top: 18%;
   left: 35%;
 }
+
+.movie_details > h2 {
+  color: #fff !important;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
 .movie_details > div {
   color: #fff !important;
-  font-size: 32px;
+  font-size: 18px;
   font-weight: 700;
-  position: absolute;
-  top: 22%;
-  left: 35%;
 }
 
 iframe {
@@ -60,12 +62,14 @@ iframe {
   color: #fff !important;
   font-size: 14px;
   position: absolute;
-  top: 28%;
+  top: 50%;
   left: 35%;
+  padding-right: 10px;
 }
 
 #overview p {
   font-size: 20px;
+  margin-bottom: 10px;
 }
 .div-btn {
   display: flex;
@@ -98,4 +102,125 @@ iframe {
   border-radius: 100%;
   background: none;
   cursor: pointer;
+}
+
+#release-genre-duration span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.castWrapper h2 {
+  color: #fff;
+  padding: 50px;
+  margin: 0;
+}
+
+.castContainer {
+  overflow-x: scroll;
+  display: flex;
+  margin: 0 50px;
+}
+.castCard {
+  margin-right: 10px;
+  background-color: rgba(28, 28, 28, 0.739);
+  min-height: 180px;
+  max-height: 480px;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+.castCard > img {
+  width: 140px;
+  height: 180px;
+  border-radius: 10px 10px 0 0;
+}
+
+.castCard h3,
+.castCard h5 {
+  color: #fff;
+}
+
+.castContainer::-webkit-scrollbar {
+  background: #888;
+  height: 8px;
+  border-radius: 5px;
+}
+
+.castContainer::-webkit-scrollbar-track {
+  background: #343434;
+  border-radius: 5px;
+}
+
+.castContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.circularChart {
+  width: 68px;
+  height: 68px;
+}
+
+.CircularProgressbar {
+  background-color: #081c22;
+  padding: 5px;
+  border-radius: 100%;
+}
+
+.circularChart_and_Other_Icons {
+  display: flex;
+  align-items: center;
+}
+.circularChart_and_Other_Icons h6 {
+  color: #fff;
+  max-height: 68px;
+  max-width: 45px;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 700;
+  margin-left: 5px;
+}
+
+.tagline {
+  color: #fff !important;
+  font-size: 14px;
+  position: absolute;
+  top: 45%;
+  left: 35%;
+  margin-bottom: 0;
+  font-size: 1.1em;
+  font-weight: 400;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.Score_Fav_WatchList_Rate_Container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.HeartFieldContainer {
+  width: 50px;
+  height: 50px;
+  background-color: #081c22;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+}
+
+.watchTrailerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.watchTrailerContainer h6 {
+  margin: 0;
+  font-size: 14px;
+  color: #fff;
+}
+.watchTrailerContainer:hover {
+  opacity: 0.6;
 }

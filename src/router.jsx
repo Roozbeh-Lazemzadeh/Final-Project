@@ -2,14 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import Home from "./component/pages/Home";
 import Movies from "./component/pages/Movies";
 import Movie from "./component/pages/Movie";
-import LogIn from "./component/pages/LogIn";
 import App from "./App";
 import Header from "./component/header/Header";
-import SectionHeader from "./component/body/SectionHeader";
 import SignIn from "./component/form/SignIn";
 import Footer from "./component/Footer/Footer";
 import UserProvider from "./context/UserContext";
 import Profile from "./component/pages/Profile";
+import ProfileFavorites from "./component/pages/profile/ProfileFavorites";
+import ProfileWatchList from "./component/pages/profile/ProfileWatchList";
+import ProfileRatings from "./component/pages/profile/ProfileRatings";
 
 export const router = createBrowserRouter([
   {
@@ -50,8 +51,20 @@ export const router = createBrowserRouter([
         element: <Movies />,
       },
       {
-        path: "/profile",
+        path: "/profile/Dashboard",
         element: <Profile />,
+      },
+      {
+        path: "/profile/Favorites",
+        element: <ProfileFavorites />,
+      },
+      {
+        path: "/profile/WatchList",
+        element: <ProfileWatchList />,
+      },
+      {
+        path: "/profile/Ratings",
+        element: <ProfileRatings />,
       },
     ],
   },

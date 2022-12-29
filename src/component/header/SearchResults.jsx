@@ -33,11 +33,15 @@ export default function SearchResults(props) {
     if (inputValue.length) {
       setIsLoading(false);
       try {
-        const { data } = await axios.get(
+        const movie = await axios.get(
           `${baseUrl}/search/movie?api_key=${apikey}&query=${inputValue}`
         );
-        console.log(data.results);
-        setResult(data.results);
+        const tv = await axios.get(
+          `${baseUrl}/search/tv?api_key=${apikey}&query=${inputValue}`
+        );
+        const movieTv = [...movie.data.results, ...tv.data.results];
+
+        setResult(movieTv);
       } catch {
         setIsLoading(false);
         console.log("error");
@@ -70,7 +74,6 @@ export default function SearchResults(props) {
         );
         setResult(data.results);
         setIsLoading(false);
-        console.log(data.results);
       } catch {
         setIsLoading(false);
         console.log("error");
@@ -79,7 +82,6 @@ export default function SearchResults(props) {
   useEffect(() => {
     if (query) search();
   }, [query]);
-
   //suggestion result onSubmit end
 
   return (
@@ -113,7 +115,7 @@ export default function SearchResults(props) {
             name="search"
             className="search_box_body_form_input"
             placeholder="Search here..."
-            autocomplete="off"
+            autoComplete="off"
             onChange={(e) => handleChange(e)}
           />
           <div>
@@ -126,8 +128,8 @@ export default function SearchResults(props) {
         </form>
         <div className="search_box_body_results">
           {result.length != 0
-            ? result.map((item) => (
-                <div className="search_box_body_results_item">
+            ? result.map((item, index) => (
+                <div className="search_box_body_results_item" key={index}>
                   <img
                     src={posterImg(item.poster_path)}
                     alt={item.title}
@@ -135,13 +137,18 @@ export default function SearchResults(props) {
                   />
                   <div className="search_box_body_results_item_details">
                     <NavLink
-                      to={`/movie/${item.id}`}
+                      to={`/${item.title ? "movie" : "tv"}/${item.id}`}
                       className="search_box_body_results_item_details_title"
                     >
-                      <h3 className="search_box_body_results_item_details_title_txt">
-                        {`${item.title} (${
+                      <h3
+                        className="search_box_body_results_item_details_title_txt"
+                        onClick={closeSearchBox}
+                      >
+                        {`${item.title || item.name} (${
                           item.release_date
                             ? item.release_date.slice(0, 4)
+                            : item.first_air_date
+                            ? item.first_air_date.slice(0, 4)
                             : "unknown"
                         })`}
                       </h3>
@@ -156,7 +163,7 @@ export default function SearchResults(props) {
                       {item.vote_average}
                     </span>
                     <p className="search_box_body_results_item_details_excerpt">
-                      {item.overview}
+                      {`${item.overview.slice(0, 190)}...`}
                     </p>
                   </div>
                 </div>

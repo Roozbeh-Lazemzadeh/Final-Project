@@ -3,7 +3,7 @@ import Header from "../header/Header";
 import { Col, Row } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import { apikey, baseUrl, imgBaseURL, posterImg } from "../../apiConfig";
 import Card from "../Card/Card";
 import { Pagination } from "antd";
@@ -37,6 +37,7 @@ export default function Movies() {
 
   function onChange(number) {
     setCurrent(number);
+    window.scrollTo(0, 0);
   }
   //pagination
 
@@ -48,15 +49,15 @@ export default function Movies() {
           (movie) =>
             movies.indexOf(movie) < 18 && (
               <Col xs={12} sm={8} md={6} lg={4} key={movie.id}>
-                {/* <NavLink to={`/${movie.media_type}/${movie.id}`}> */}
-                <Card
-                  src={posterImg(movie.poster_path)}
-                  title={movie.title}
-                  name={movie.name}
-                  vote_average={movie.vote_average}
-                  media_type={types === "movie" ? "movie" : "tv"}
-                />
-                {/* </NavLink> */}
+                <NavLink to={`/${movie.title ? "movie" : "tv"}/${movie.id}`}>
+                  <Card
+                    src={posterImg(movie.poster_path)}
+                    title={movie.title}
+                    name={movie.name}
+                    vote_average={movie.vote_average}
+                    media_type={types === "movie" ? "movie" : "tv"}
+                  />
+                </NavLink>
               </Col>
             )
         )}

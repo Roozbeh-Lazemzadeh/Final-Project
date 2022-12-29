@@ -1,8 +1,7 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createContext } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 //api-key & baseurl
@@ -15,60 +14,14 @@ export default function UserProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const [status, setStatus] = useState(0);
-
   const [session, setSession] = useState(() => localStorage.getItem("session"));
-
-  const [favoriteMovie, setFavoriteMovie] = useState([]);
-
-  const [watchListMove, setWatchList] = useState([]);
 
   async function getUserData() {
     const { data } = await axios.get(
       `${baseURL}/account?api_key=${api_key}&session_id=${session}`
     );
-
-    //call function favorite Movie
-    getFavoriteMove(data.id);
-
-    //call function favorite tv
-    getFavoriteTv(data.id);
-
-    //call function getwatchListmovie
-    getWatchListMovie(data.id);
-
-    //call function getwatchListtv
-    getWatchListtv(data.id);
-
     setUser(data);
-  }
-
-  //favorite Movie
-  async function getFavoriteMove(id) {
-    const favorite = await axios.get(`
-     ${baseURL}/account/${id}/favorite/movies?api_key=${api_key}&session_id=${session}`);
-    setFavoriteMovie(favorite.data.results);
-  }
-  //favorite tv
-  async function getFavoriteTv(id) {
-    const favorite = await axios.get(`
-     ${baseURL}/account/${id}/favorite/tv?api_key=${api_key}&session_id=${session}`);
-    setFavoriteMovie(favorite.data.results);
-  }
-
-  //get watchList movies
-  async function getWatchListMovie(id) {
-    const watchList = await axios.get(`
-    ${baseURL}/account/${id}/watchlist/movies?api_key=${api_key}&session_id=${session}`);
-    setWatchList(watchList.data.results);
-  }
-
-  //get watchList tv
-  async function getWatchListtv(id) {
-    const watchList = await axios.get(`
-    ${baseURL}/account/${id}/watchlist/tv?api_key=${api_key}&session_id=${session}`);
-    setWatchList(watchList.data.results);
   }
 
   //check null or fill session
@@ -82,7 +35,6 @@ export default function UserProvider({ children }) {
       const tokenResult = await axios.get(
         `${baseURL}/authentication/token/new?api_key=${api_key}`
       );
-      // console.log(tokenResult.data.request_token);
 
       const authentication = await axios.post(
         ` ${baseURL}/authentication/token/validate_with_login?api_key=${api_key}`,
@@ -101,10 +53,8 @@ export default function UserProvider({ children }) {
       );
 
       setStatus(tokenResult.status);
-
       setSession(session.data.session_id);
       localStorage.setItem("session", session.data.session_id);
-
       navigate("/", { replace: true });
       setLoading(false);
     } catch {
@@ -124,19 +74,15 @@ export default function UserProvider({ children }) {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         login,
         session,
         status,
         loading,
         setLoading,
         logOut,
-        favoriteMovie,
-        getFavoriteMove,
         getUserData,
-        watchListMove,
-        getWatchListMovie,
-        getWatchListtv,
-        getFavoriteTv,
+        setSession,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import "./SignIn.css";
 import toast from "react-hot-toast";
@@ -41,7 +41,6 @@ export default function SignIn() {
                 className="login_page_form_item_input"
                 type="tel"
                 name="username"
-                id="mobile"
                 dir="ltr"
                 autoComplete="off"
               />
@@ -55,7 +54,6 @@ export default function SignIn() {
                 className="login_page_form_item_input"
                 type="passWord"
                 name="passWord"
-                id="mobile"
                 dir="ltr"
                 autoComplete="off"
               />

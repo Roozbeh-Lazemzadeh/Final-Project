@@ -73,7 +73,6 @@ export default function Trailers() {
   }, [movies]);
 
   function handleShowMovie(item) {
-    console.log(item);
     setShowMovie(true);
     setVideoToShow(item);
     setIsModalOpen(true);
@@ -146,7 +145,7 @@ export default function Trailers() {
               >
                 {MoviesWithFilter.map((item, index) => (
                   <SwiperSlide
-                    key={item.index}
+                    key={index}
                     onMouseOver={() => handleBg(item.data.backdrop_path)}
                   >
                     <div className="item">
@@ -186,7 +185,7 @@ export default function Trailers() {
             >
               <iframe
                 className="iframe"
-                allowfullscreen="true"
+                allowFullScreen={true}
                 width="520"
                 height="335"
                 src={`https://www.youtube.com/embed/${videoToShow.data.videos.results[0].key}`}

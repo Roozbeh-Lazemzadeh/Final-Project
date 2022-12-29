@@ -9,11 +9,14 @@ import SectionHeader from "./SectionHeader";
 import "../../module/swiper.css";
 
 export default function SwiperSection() {
+  const [movies, setMovies] = useState([]);
   const [Bg, setBg] = useState(
-    "https://image.tmdb.org/t/p/w780//6oZeEu1GDILdwezmZ5e2xWISf1C.jpg"
+    // "https://image.tmdb.org/t/p/w780//6oZeEu1GDILdwezmZ5e2xWISf1C.jpg"
+    () => {
+      movies.length && posterImg(movies[0].poster_path);
+    }
   );
   const [mediaType, setMediaType] = useState("movie");
-  const [movies, setMovies] = useState([]);
 
   function handleBg(path) {
     return setBg(posterImg(path, "original"));
